@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# PyCharm settings
+.idea/
+
+# virtual environment settings
+cv-data-extractor/
