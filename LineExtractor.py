@@ -1,27 +1,13 @@
 from DocFileObjects import *
 
 
-def is_english(complex_text):
-    try:
-        complex_text.encode(encoding='utf-8').decode('ascii')
-    except UnicodeDecodeError:
-        return False
-    else:
-        return True
+def line_extractor(text):
+    for text in raw_text:
+        print(text)
+        text_lines = raw_text.split("\n")
+    return text_lines
 
 
-txt.encode('utf-8')
-txt = txt.strip().split()
-txt = txt[::-1]
-
-# print(txt)
-
-cleared = list()
-for word in txt:
-    if is_english(word):
-        pass
-    else:
-        word = word[::-1]
-    cleared.append(word)
-
-print(cleared)
+lines = line_extractor(raw_text)
+# print(raw_text)
+print(lines)
