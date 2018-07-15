@@ -108,3 +108,6 @@ venv.bak/
 
 # virtual environment settings
 cv-data-extractor/
+
+# cv documents
+cv_docs/
