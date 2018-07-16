@@ -1,4 +1,3 @@
-# import io
 import zipfile
 import unicodedata
 from xml.etree.ElementTree import XML
@@ -14,17 +13,27 @@ class DocFile:
 
     def __init__(self, name):
         self.location = './cv_docs/' + name
+        self.format = self.location.split(".")[-1]
 
     def pdf2text(self):
-        document = fitz.open(self.location)
-        text = list()
-        for page in document:
-            raw_text = page.getText()
-            text.append(raw_text)
-        if text:
-            return text
+        document = list()
+        file_text = list()
+        if self.format == 'pdf':
+            document = fitz.open(self.location)
         else:
-            return 'Empty file!'
+            print('Error! This file is not in PDF format')
+        if document:
+            for page in document:
+                raw_text = page.getText()
+                print(page.getFontList())
+                file_text.append(raw_text)
+            if file_text:
+                return file_text
+            else:
+                return 'Empty file!'
+        else:
+            print('Reading PDF file aborted.')
+            return None
 
     def word2text(self):
         document = zipfile.ZipFile(self.location)
