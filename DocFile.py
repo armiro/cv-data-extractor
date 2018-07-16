@@ -2,7 +2,7 @@ import zipfile
 import unicodedata
 from xml.etree.ElementTree import XML
 import fitz
-
+import json
 
 WORD_NAMESPACE = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 PARA = WORD_NAMESPACE + 'p'
@@ -15,7 +15,7 @@ class DocFile:
         self.location = './cv_docs/' + name
         self.format = self.location.split(".")[-1]
 
-    def pdf2text(self):
+    def pdf2textlines(self):
         document = list()
         file_text = list()
         if self.format == 'pdf':
@@ -23,12 +23,25 @@ class DocFile:
         else:
             print('Error! This file is not in PDF format')
         if document:
+            lines = []
             for page in document:
-                raw_text = page.getText()
-                print(page.getFontList())
-                file_text.append(raw_text)
+                display_list = page.getDisplayList()
+                text_page = display_list.getTextPage()
+                text = text_page.extractJSON()
+                page_dict = json.loads(text)
+
+                for i in page_dict['blocks']:
+                    line = []
+                    # print(i['lines'])
+                    for j in i['lines']:
+                        for k in j['spans']:
+                            k['size'] = round(k['size'])
+                            line.append([k['text'], k['font'], k['size']])
+                        if line not in lines:
+                            lines.append(line)
+
             if file_text:
-                return file_text
+                return lines
             else:
                 return 'Empty file!'
         else:
