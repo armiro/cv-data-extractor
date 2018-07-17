@@ -35,7 +35,8 @@ class DocFile:
                     for j in i['lines']:
                         for k in j['spans']:
                             k['size'] = round(k['size'])
-                            line.append([k['text'], k['font'], k['size']])
+                            if len(k['text'].split()):
+                                line.append([k['text'], k['font'], k['size']])
                         if line not in lines:
                             lines.append(line)
 
