@@ -87,4 +87,8 @@ def blocking_feature_extractor(line_couples):
     return dot, capital, font_change, size_change
 
 
+coupled_text = line_coupler(raw_text)
+print(len(raw_text))
+print(coupled_text[0])
+print(len(coupled_text))
 
