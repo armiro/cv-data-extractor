@@ -40,6 +40,14 @@ def line_extractor(input_text):
 # deprecated function ended.
 
 
+def line_cleaner(input_text):
+    cleared_text = list()
+    for text_line in input_text:
+        for text_part in text_line:
+            text_part[0] = text_part[0].strip()
+    return input_text
+
+
 def line_coupler(text_lines):
     line_couples = list()
     for line_idx in range(0, len(text_lines)-1, 1):
@@ -72,23 +80,21 @@ def blocking_feature_extractor(line_couples):
         else:
             size_change.append(0)
 
-        # second line's first letter is capital
-        if second_line[0][0][0].isupper():
-            capital.append(True)
-        else:
-            capital.append(False)
-
         # first line's last element is a dot
-        if first_line[-1][0][-1] == '.':
-            dot.append(True)
+        if len(first_line[-1][0]):
+            print(first_line[-1][0])
+            print(first_line[-1][0][-1])
+            if first_line[-1][0][-1] == '.':
+                dot.append(True)
         else:
             dot.append(False)
 
     return dot, capital, font_change, size_change
 
 
-coupled_text = line_coupler(raw_text)
-print(len(raw_text))
-print(coupled_text[0])
-print(len(coupled_text))
+cleared_text = line_cleaner(raw_text)
+coupled_text = line_coupler(cleared_text)
+dot, capital, font_change, size_change = blocking_feature_extractor(coupled_text)
+print(dot)
+print(raw_text[2][0][-1] == '.')
 
