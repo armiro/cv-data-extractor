@@ -17,7 +17,6 @@ class DocFile:
 
     def pdf2textlines(self):
         document = list()
-        file_text = list()
         if self.format == 'pdf':
             document = fitz.open(self.location)
         else:
@@ -40,7 +39,7 @@ class DocFile:
                         if line not in lines:
                             lines.append(line)
 
-            if file_text:
+            if lines:
                 return lines
             else:
                 return 'Empty file!'
