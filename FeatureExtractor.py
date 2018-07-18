@@ -24,7 +24,7 @@ block_starting_keywords = [
     # skills
     'experi', 'skill', 'profession', 'profess', 'workshop',
     # academic activities
-    'academ', 'activ', 'research', 'articl', 'lectur', 'patent', 'paper', 'public', 'these', 'thesi',
+    'academ', 'activ', 'research', 'articl', 'lectur', 'patent', 'paper', 'public', 'these', 'thesi', 'present'
     # work experiences
     'work', 'employ', 'compet', 'teach',
     # languages
@@ -130,9 +130,9 @@ def blocking_feature_extractor(line_couples):
             size_change.append(0)
 
     label = [0] * len(has_keyword)
-    for index in range(0, len(label)-1):
+    for index in range(0, len(label)):
         this_record = [content[index], font_change[index], size_change[index], has_dot[index],
-                       has_keyword[index], label[index]]
+                        has_keyword[index], label[index]]
         this_record = pd.Series(this_record, index=feature_keys)
         this_record = this_record.to_json(orient='index')
         this_record = ast.literal_eval(this_record)
