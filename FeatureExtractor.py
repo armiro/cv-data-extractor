@@ -67,7 +67,10 @@ def blocking_feature_extractor(line_couples):
     size_change = list()
     has_dot = list()
     has_keyword = list()
+    content = line_couples
+    label = [0] * len(line_couples)
     found = False
+    features = [content, font_change, size_change, has_dot, has_keyword, label]
 
     for line_couple in line_couples:
         first_line = line_couple[0]
@@ -108,21 +111,27 @@ def blocking_feature_extractor(line_couples):
                         # print(target_word)
                         found = True
                         # break
-                # if a title has more that one keyword, just consider the first!
+                # if a title has more than one keyword, just consider the first!
                 if found is True:
                     break
             if found is False:
                 has_keyword.append(0)
             found = False
 
-    return has_keyword, has_dot, font_change, size_change
+    return features
 
 
-cleared_text = line_cleaner(raw_text)
-coupled_text = line_coupler(cleared_text)
-has_keyword, has_dot, font_change, size_change = blocking_feature_extractor(coupled_text)
+# main code, receives raw-text extracted from PDF file and returns the features
+if __name__ == '__main__':
 
-# print(cleared_text)
-# print(coupled_text)
-print(has_keyword)
+    cleared_text = line_cleaner(raw_text)
+    coupled_text = line_coupler(cleared_text)
+    block_detection_features = blocking_feature_extractor(coupled_text)
 
+    # print(len(raw_text))
+    # print(len(cleared_text)) # should be len(raw_text) - 1
+    # print(len(coupled_text)) # should be len(raw_text) - 1
+    # print(len(block_detection_features)) # should be 6
+    # print(cleared_text)
+    # print(coupled_text)
+    # print(block_detection_features)
