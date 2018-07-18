@@ -1,6 +1,9 @@
 from DocFileObjects import *
 from stemming.porter2 import stem
 # from stemming.paicehusk import stem
+import json
+import pandas as pd
+import ast
 
 # test_text = [
 #     [['CURRICULUM VITAE', 'TimesNewRoman-Bold', 12]],
@@ -68,9 +71,12 @@ def blocking_feature_extractor(line_couples):
     has_dot = list()
     has_keyword = list()
     content = line_couples
-    label = [0] * len(line_couples)
+
+    feature_dict = list()
     found = False
-    features = [content, font_change, size_change, has_dot, has_keyword, label]
+
+    # feature_values = [content, font_change, size_change, has_dot, has_keyword, label]
+    feature_keys = ['content', 'font_change', 'size_change', 'has_dot', 'has_keyword', 'label']
 
     for line_couple in line_couples:
         first_line = line_couple[0]
@@ -118,7 +124,15 @@ def blocking_feature_extractor(line_couples):
                 has_keyword.append(0)
             found = False
 
-    return features
+    label = [0] * len(has_keyword)
+    for index in range(0, len(label)-1):
+        this_record = [content[index], font_change[index], size_change[index], has_dot[index],
+                       has_keyword[index], label[index]]
+        this_record = pd.Series(this_record, index=feature_keys)
+        this_record = this_record.to_json(orient='index')
+        this_record = ast.literal_eval(this_record)
+        feature_dict.append(this_record)
+    return feature_dict
 
 
 # main code, receives raw-text extracted from PDF file and returns the features
@@ -135,3 +149,8 @@ if __name__ == '__main__':
     # print(cleared_text)
     # print(coupled_text)
     # print(block_detection_features)
+
+    with open('Blocks.json', 'w+') as file:
+        json.dump(block_detection_features, file, indent=2)
+    file.close()
+
