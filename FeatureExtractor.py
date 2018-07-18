@@ -123,6 +123,11 @@ def blocking_feature_extractor(line_couples):
             if found is False:
                 has_keyword.append(0)
             found = False
+        else:
+            has_keyword.append(0)
+            has_dot.append(0)
+            font_change.append(0)
+            size_change.append(0)
 
     label = [0] * len(has_keyword)
     for index in range(0, len(label)-1):
