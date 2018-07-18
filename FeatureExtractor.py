@@ -151,11 +151,10 @@ if __name__ == '__main__':
     # print(len(cleared_text)) # should be len(raw_text) - 1
     # print(len(coupled_text)) # should be len(raw_text) - 1
     # print(len(block_detection_features)) # should be 6
-    # print(cleared_text)
     # print(coupled_text)
     # print(block_detection_features)
 
-    with open('Blocks.json', 'w+') as file:
-        json.dump(block_detection_features, file, indent=2)
-    file.close()
+    # with open('Blocks.json', 'w+') as file:
+    #     json.dump(block_detection_features, file, indent=2)
+    # file.close()
 
