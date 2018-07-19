@@ -154,7 +154,6 @@ if __name__ == '__main__':
     # print(coupled_text)
     # print(block_detection_features)
 
-    # with open('Blocks.json', 'w+') as file:
-    #     json.dump(block_detection_features, file, indent=2)
-    # file.close()
-
+    with open('Blocks.json', 'w+') as file:
+        json.dump(block_detection_features, file, indent=2)
+    file.close()
