@@ -43,17 +43,28 @@ for f in features_test:
 
 new_content = []
 l = 0
+m = 0
+
 while l < len(labels_test):
     if labels_test[l] == 1:
-        # print(l)
-        con = content[:l]
-        print(con)
+        con = content[m:l]
         new_content.append(con)
-        content = content[l:]
-        # print(content)
+        m = l
 
     l += 1
 
-# print(new_content)
 # for i in new_content:
 #     print(i)
+all_text = []
+for i in range(len(new_content)):
+    txt = ''
+    for j in range(len(new_content[i])):
+        for k in range(len(new_content[i][j])):
+            txt += new_content[i][j][k][0] + ' '
+    all_text.append({'content': txt})
+
+
+with open('Paragraph.json', 'w+') as file:
+    json.dump(all_text, file, indent=2)
+file.close()
+
